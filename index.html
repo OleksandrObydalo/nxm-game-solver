@@ -1,0 +1,81 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор смешанных стратегий</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор смешанных стратегий методом линейного программирования</h1>
+        
+        <div class="section">
+            <h2>Платежная матрица</h2>
+            <div class="matrix-container">
+                <div class="matrix-label">Игрок A (строки) vs Игрок B (столбцы)</div>
+                <div class="matrix-input" id="matrixInput">
+                    <!-- Будет заполнена JavaScript -->
+                </div>
+                <div class="matrix-controls">
+                    <div class="dimension-inputs">
+                        <label for="rowsInput">Строки:</label>
+                        <input type="number" id="rowsInput" min="2" max="10" value="4" onchange="updateMatrixSize()">
+                        <label for="colsInput">Столбцы:</label>
+                        <input type="number" id="colsInput" min="2" max="10" value="4" onchange="updateMatrixSize()">
+                        <button onclick="applyCustomSize()">Применить</button>
+                    </div>
+                    <div class="preset-buttons">
+                        <button onclick="changeMatrixSize(3, 3)">3×3</button>
+                        <button onclick="changeMatrixSize(4, 4)" class="active">4×4</button>
+                        <button onclick="changeMatrixSize(5, 5)">5×5</button>
+                        <button onclick="loadExampleMatrix()">Загрузить пример</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <button class="calculate-btn" onclick="calculateStrategies()">Рассчитать стратегии</button>
+        </div>
+
+        <div class="section" id="resultsSection" style="display: none;">
+            <h2>Результаты</h2>
+            <div class="results-container">
+                <div class="game-value">
+                    <h3>Цена игры: <span id="gameValue">-</span></h3>
+                </div>
+                
+                <div class="strategies-grid">
+                    <div class="strategy-card">
+                        <h3>Оптимальная стратегия игрока A</h3>
+                        <div class="strategy-table" id="strategyA">
+                            <!-- Заполнится JavaScript -->
+                        </div>
+                        <div class="strategy-chart" id="chartA"></div>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h3>Оптимальная стратегия игрока B</h3>
+                        <div class="strategy-table" id="strategyB">
+                            <!-- Заполнится JavaScript -->
+                        </div>
+                        <div class="strategy-chart" id="chartB"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Описание метода</h2>
+            <div class="description">
+                <p>Программа решает задачу поиска оптимальных смешанных стратегий в матричной игре с помощью линейного программирования.</p>
+                <p><strong>Для игрока A:</strong> Максимизация минимального гарантированного выигрыша</p>
+                <p><strong>Для игрока B:</strong> Минимизация максимального проигрыша</p>
+                <p>Используется алгоритм симплекс-метода для решения задач линейного программирования.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
