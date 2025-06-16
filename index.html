@@ -13,8 +13,21 @@
             <h2>Платежная матрица</h2>
             <div class="matrix-container">
                 <div class="matrix-label">Игрок A (строки) vs Игрок B (столбцы)</div>
-                <div class="matrix-input" id="matrixInput">
-                    <!-- Будет заполнена JavaScript -->
+                <div class="matrix-wrapper">
+                    <div class="matrix-labels-row">
+                        <div class="matrix-corner"></div>
+                        <div class="column-labels" id="columnLabels">
+                            <!-- Будет заполнена JavaScript -->
+                        </div>
+                    </div>
+                    <div class="matrix-main">
+                        <div class="row-labels" id="rowLabels">
+                            <!-- Будет заполнена JavaScript -->
+                        </div>
+                        <div class="matrix-input" id="matrixInput">
+                            <!-- Будет заполнена JavaScript -->
+                        </div>
+                    </div>
                 </div>
                 <div class="matrix-controls">
                     <div class="dimension-inputs">
@@ -52,6 +65,9 @@
                             <!-- Заполнится JavaScript -->
                         </div>
                         <div class="strategy-chart" id="chartA"></div>
+                        <div class="expectation-calculation" id="expectationA">
+                            <!-- Расчет математического ожидания -->
+                        </div>
                     </div>
                     
                     <div class="strategy-card">
@@ -60,6 +76,9 @@
                             <!-- Заполнится JavaScript -->
                         </div>
                         <div class="strategy-chart" id="chartB"></div>
+                        <div class="expectation-calculation" id="expectationB">
+                            <!-- Расчет математического ожидания -->
+                        </div>
                     </div>
                 </div>
             </div>

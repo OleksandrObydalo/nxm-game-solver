@@ -136,6 +136,26 @@ function createMatrix(rows, cols) {
     const container = document.getElementById('matrixInput');
     container.innerHTML = '';
     
+    // Создаем подписи столбцов
+    const columnLabels = document.getElementById('columnLabels');
+    columnLabels.innerHTML = '';
+    for (let j = 0; j < cols; j++) {
+        const label = document.createElement('div');
+        label.className = 'column-label';
+        label.textContent = `B${j + 1}`;
+        columnLabels.appendChild(label);
+    }
+    
+    // Создаем подписи строк
+    const rowLabels = document.getElementById('rowLabels');
+    rowLabels.innerHTML = '';
+    for (let i = 0; i < rows; i++) {
+        const label = document.createElement('div');
+        label.className = 'row-label';
+        label.textContent = `A${i + 1}`;
+        rowLabels.appendChild(label);
+    }
+    
     for (let i = 0; i < rows; i++) {
         const row = document.createElement('div');
         row.className = 'matrix-row';
@@ -291,11 +311,16 @@ function displayResults(strategyA, strategyB, gameValue) {
     // Цена игры
     document.getElementById('gameValue').textContent = gameValue.toFixed(4);
     
+    // Получаем матрицу для расчетов
+    const payoffMatrix = getPayoffMatrix();
+    
     // Стратегия игрока A
     displayStrategy('strategyA', 'chartA', strategyA, 'A');
+    displayExpectationCalculation('expectationA', strategyA, payoffMatrix, 'A');
     
     // Стратегия игрока B
     displayStrategy('strategyB', 'chartB', strategyB, 'B');
+    displayExpectationCalculation('expectationB', strategyB, payoffMatrix, 'B');
 }
 
 // Отображение одной стратегии
@@ -319,6 +344,104 @@ function displayStrategy(tableId, chartId, strategy, player) {
     
     // График
     displayChart(chartId, strategy, player);
+}
+
+// Новая функция для отображения расчета математического ожидания
+function displayExpectationCalculation(containerId, strategy, payoffMatrix, player) {
+    const container = document.getElementById(containerId);
+    
+    if (player === 'A') {
+        // Для игрока A: находим минимальное ожидание по всем столбцам
+        let minExpectation = Infinity;
+        let worstColumnIndex = -1;
+        let calculations = [];
+        
+        for (let j = 0; j < payoffMatrix[0].length; j++) {
+            let expectation = 0;
+            let calculationParts = [];
+            
+            for (let i = 0; i < payoffMatrix.length; i++) {
+                const value = payoffMatrix[i][j] * strategy[i];
+                expectation += value;
+                if (strategy[i] > 0.0001) { // Показываем только значимые вероятности
+                    calculationParts.push(`${payoffMatrix[i][j]}×${strategy[i].toFixed(4)}`);
+                }
+            }
+            
+            calculations.push({
+                column: j,
+                expectation: expectation,
+                calculation: calculationParts.join(' + ')
+            });
+            
+            if (expectation < minExpectation) {
+                minExpectation = expectation;
+                worstColumnIndex = j;
+            }
+        }
+        
+        let html = '<div class="expectation-title">Математическое ожидание против каждой стратегии B:</div>';
+        html += '<div class="expectation-list">';
+        
+        calculations.forEach((calc, index) => {
+            const isWorst = index === worstColumnIndex;
+            html += `<div class="expectation-item ${isWorst ? 'worst-case' : ''}">
+                <strong>Против B${calc.column + 1}:</strong> ${calc.calculation} = ${calc.expectation.toFixed(4)}
+                ${isWorst ? ' <span class="worst-label">(худший случай)</span>' : ''}
+            </div>`;
+        });
+        
+        html += '</div>';
+        html += `<div class="expectation-summary">Гарантированный выигрыш: <strong>${minExpectation.toFixed(4)}</strong></div>`;
+        
+        container.innerHTML = html;
+        
+    } else {
+        // Для игрока B: находим максимальное ожидание по всем строкам
+        let maxExpectation = -Infinity;
+        let worstRowIndex = -1;
+        let calculations = [];
+        
+        for (let i = 0; i < payoffMatrix.length; i++) {
+            let expectation = 0;
+            let calculationParts = [];
+            
+            for (let j = 0; j < payoffMatrix[0].length; j++) {
+                const value = payoffMatrix[i][j] * strategy[j];
+                expectation += value;
+                if (strategy[j] > 0.0001) { // Показываем только значимые вероятности
+                    calculationParts.push(`${payoffMatrix[i][j]}×${strategy[j].toFixed(4)}`);
+                }
+            }
+            
+            calculations.push({
+                row: i,
+                expectation: expectation,
+                calculation: calculationParts.join(' + ')
+            });
+            
+            if (expectation > maxExpectation) {
+                maxExpectation = expectation;
+                worstRowIndex = i;
+            }
+        }
+        
+        let html = '<div class="expectation-title">Математическое ожидание против каждой стратегии A:</div>';
+        html += '<div class="expectation-list">';
+        
+        calculations.forEach((calc, index) => {
+            const isWorst = index === worstRowIndex;
+            html += `<div class="expectation-item ${isWorst ? 'worst-case' : ''}">
+                <strong>Против A${calc.row + 1}:</strong> ${calc.calculation} = ${calc.expectation.toFixed(4)}
+                ${isWorst ? ' <span class="worst-label">(худший случай)</span>' : ''}
+            </div>`;
+        });
+        
+        html += '</div>';
+        html += `<div class="expectation-summary">Максимальный проигрыш: <strong>${maxExpectation.toFixed(4)}</strong></div>`;
+        
+        container.innerHTML = html;
+    }
 }
 
 // Отображение диаграммы

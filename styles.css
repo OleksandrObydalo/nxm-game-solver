@@ -56,16 +56,67 @@ h3 {
     text-align: center;
 }
 
-.matrix-label {
+.matrix-wrapper {
+    display: inline-block;
     margin-bottom: 20px;
+}
+
+.matrix-labels-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.matrix-corner {
+    width: 40px;
+    height: 30px;
+}
+
+.column-labels {
+    display: flex;
+    gap: 8px;
+}
+
+.column-label {
+    width: 60px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 600;
-    color: #555;
-    font-size: 1.1em;
+    font-size: 14px;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 6px;
+}
+
+.matrix-main {
+    display: flex;
+    align-items: flex-start;
+}
+
+.row-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-right: 8px;
+}
+
+.row-label {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 6px;
 }
 
 .matrix-input {
     display: inline-block;
-    margin-bottom: 20px;
     padding: 20px;
     background: #f8f9fa;
     border-radius: 12px;
@@ -221,6 +272,60 @@ h3 {
     border-radius: 15px;
     font-size: 1.3em;
     box-shadow: 0 10px 25px rgba(17, 153, 142, 0.3);
+}
+
+.expectation-calculation {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.expectation-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.expectation-list {
+    margin-bottom: 15px;
+}
+
+.expectation-item {
+    margin-bottom: 8px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.4;
+    border-left: 3px solid #ddd;
+}
+
+.expectation-item.worst-case {
+    background: rgba(255, 193, 7, 0.1);
+    border-left-color: #ffc107;
+}
+
+.worst-label {
+    color: #e67e22;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.expectation-summary {
+    padding: 10px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.expectation-summary strong {
+    color: #667eea;
+    font-size: 16px;
 }
 
 .strategies-grid {
