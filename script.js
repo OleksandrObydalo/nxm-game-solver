@@ -1,4 +1,7 @@
+// Файл: script.js — содержит логику калькулятора
+
 // Класс для решения задач линейного программирования (упрощенная версия)
+// Объявление класса для решения методом симплекс
 class SimplexSolver {
     constructor() {
         this.tolerance = 1e-8;
@@ -127,11 +130,13 @@ let solver = new SimplexSolver();
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', function() {
+// Создание матрицы ввода
     createMatrix(currentRows, currentCols);
     loadExampleMatrix();
 });
 
 // Создание матрицы ввода
+// Функция: function createMatrix(rows, cols) {
 function createMatrix(rows, cols) {
     const container = document.getElementById('matrixInput');
     container.innerHTML = '';
@@ -177,6 +182,7 @@ function createMatrix(rows, cols) {
 }
 
 // Изменение размера матрицы
+// Функция: function changeMatrixSize(newRows, newCols) {
 function changeMatrixSize(newRows, newCols) {
     // Обновляем активную кнопку
     document.querySelectorAll('.preset-buttons button').forEach(btn => {
@@ -191,6 +197,7 @@ function changeMatrixSize(newRows, newCols) {
     document.getElementById('rowsInput').value = newRows;
     document.getElementById('colsInput').value = newCols;
     
+// Создание матрицы ввода
     createMatrix(newRows, newCols);
     
     // Скрываем результаты
@@ -198,6 +205,7 @@ function changeMatrixSize(newRows, newCols) {
 }
 
 // Обновление размера матрицы из полей ввода
+// Функция: function updateMatrixSize() {
 function updateMatrixSize() {
     const rows = parseInt(document.getElementById('rowsInput').value);
     const cols = parseInt(document.getElementById('colsInput').value);
@@ -210,6 +218,7 @@ function updateMatrixSize() {
 }
 
 // Применение пользовательского размера
+// Функция: function applyCustomSize() {
 function applyCustomSize() {
     const rows = parseInt(document.getElementById('rowsInput').value);
     const cols = parseInt(document.getElementById('colsInput').value);
@@ -222,6 +231,7 @@ function applyCustomSize() {
         
         currentRows = rows;
         currentCols = cols;
+// Создание матрицы ввода
         createMatrix(rows, cols);
         
         // Скрываем результаты
@@ -232,6 +242,7 @@ function applyCustomSize() {
 }
 
 // Загрузка примера матрицы
+// Функция: function loadExampleMatrix() {
 function loadExampleMatrix() {
     const example = [
         [4, 7, 10, 11],
@@ -251,6 +262,7 @@ function loadExampleMatrix() {
 }
 
 // Получение матрицы из интерфейса
+// Функция: function getPayoffMatrix() {
 function getPayoffMatrix() {
     const matrix = [];
     
@@ -268,6 +280,7 @@ function getPayoffMatrix() {
 }
 
 // Основная функция расчета
+// Расчет оптимальных стратегий для обоих игроков
 async function calculateStrategies() {
     const button = document.querySelector('.calculate-btn');
     const originalText = button.textContent;
@@ -307,6 +320,7 @@ async function calculateStrategies() {
 }
 
 // Отображение результатов
+// Функция: function displayResults(strategyA, strategyB, gameValue) {
 function displayResults(strategyA, strategyB, gameValue) {
     // Цена игры
     document.getElementById('gameValue').textContent = gameValue.toFixed(4);
@@ -324,6 +338,7 @@ function displayResults(strategyA, strategyB, gameValue) {
 }
 
 // Отображение одной стратегии
+// Функция: function displayStrategy(tableId, chartId, strategy, player) {
 function displayStrategy(tableId, chartId, strategy, player) {
     // Таблица
     const tableContainer = document.getElementById(tableId);
@@ -347,6 +362,7 @@ function displayStrategy(tableId, chartId, strategy, player) {
 }
 
 // Новая функция для отображения расчета математического ожидания
+// Функция: function displayExpectationCalculation(containerId, strategy, payoffMatrix, player) {
 function displayExpectationCalculation(containerId, strategy, payoffMatrix, player) {
     const container = document.getElementById(containerId);
     
@@ -445,6 +461,7 @@ function displayExpectationCalculation(containerId, strategy, payoffMatrix, play
 }
 
 // Отображение диаграммы
+// Функция: function displayChart(chartId, strategy, player) {
 function displayChart(chartId, strategy, player) {
     const chartContainer = document.getElementById(chartId);
     chartContainer.innerHTML = '';
